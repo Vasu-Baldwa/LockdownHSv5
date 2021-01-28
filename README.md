@@ -1,6 +1,6 @@
-UB Lockdown v8
+UB Lockdown HSv5
 =========
-This is a UB Lockdown v8 Deployment Repo. The whole deployment and VM configuration procedure is carried out by ansible.
+This is a UB Lockdown HSv5 Deployment Repo. The whole deployment and VM configuration procedure is carried out by ansible.
 
 Where to start?
 =========
