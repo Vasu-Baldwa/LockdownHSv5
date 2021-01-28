@@ -10,9 +10,9 @@ except ImportError:
 
 
 class Inventory(object):
-############################################################################
-################# DON'T CHANGE THIS ########################################
-############################################################################
+    ############################################################################
+    ################# DON'T CHANGE THIS ########################################
+    ############################################################################
     def __init__(self):
         self.inventory = {}
         self.read_cli_args()
@@ -31,6 +31,7 @@ class Inventory(object):
 ############################################################################
 ################# DON'T CHANGE THIS ########################################
 ############################################################################
+
 
     def inventory_generator(self):
 
@@ -55,33 +56,47 @@ class Inventory(object):
         all_vars['afinity_enable'] = True
         all_vars['pfsense_template'] = 'Router-v8'
         all_vars['cloud_folder'] = '{}_Cloud'.format(all_vars['parent_folder'])
-        all_vars['domain'] = 'happy.holidays'
-        all_vars['netbios'] = 'HOLIDAY'
+        all_vars['domain'] = 'reallife.lockdown'
+        all_vars['netbios'] = 'VIRUS'
         all_vars['WAN_Subnet'] = 29
         all_vars['IP_jump'] = 8
         all['vars'] = all_vars
         #####################################################################################################
 
         #####################################################################################################
-        Active_Directory = ['10.X.1.60'.replace('X', str(i))for i in range(all_vars['start_team'], all_vars['total_teams']  + all_vars['start_team'])]
-        Windows_10 = ['10.X.1.70'.replace('X', str(i))for i in range(all_vars['start_team'], all_vars['total_teams']  + all_vars['start_team'])]
-        Windows_Core = ['10.X.1.50'.replace('X', str(i))for i in range(all_vars['start_team'], all_vars['total_teams']  + all_vars['start_team'])]
-        Rouge_Windows = ['10.X.1.10'.replace('X', str(i))for i in range(all_vars['start_team'], all_vars['total_teams']  + all_vars['start_team'])]
-        CentOS = ['10.X.1.30'.replace('X', str(i))for i in range(all_vars['start_team'], all_vars['total_teams']  + all_vars['start_team'])]
-        Ubuntu = ['10.X.1.40'.replace('X', str(i))for i in range(all_vars['start_team'], all_vars['total_teams']  + all_vars['start_team'])]
-        FTP = ['10.X.2.4'.replace('X', str(i)) for i in range(all_vars['start_team'], all_vars['total_teams']  + all_vars['start_team'])]
-        WEB = ['10.X.2.2'.replace('X', str(i)) for i in range(all_vars['start_team'], all_vars['total_teams']  + all_vars['start_team'])]
-        DB = ['10.X.2.3'.replace('X', str(i)) for i in range(all_vars['start_team'], all_vars['total_teams']  + all_vars['start_team'])]
-        Gaming_Forum = ['10.X.2.10'.replace('X', str(i))for i in range(all_vars['start_team'], all_vars['total_teams']  + all_vars['start_team'])]
-        GitLab = ['10.X.2.5'.replace('X', str(i)) for i in range(all_vars['start_team'], all_vars['total_teams']  + all_vars['start_team'])]
-        Traveler = ["192.168.253.{}".format(str((i-1)*all_vars['IP_jump']+3)) for i in range(all_vars['start_team'], all_vars['total_teams']  + all_vars['start_team'])]
-        PaloAlto = ['13.33.33.X'.replace('X', str(i)) for i in range(all_vars['start_team'], all_vars['total_teams']  + all_vars['start_team'])]
 
-        cloud = WEB + DB + FTP + Gaming_Forum + GitLab + PaloAlto
+        # LAN
+        Active_Directory = ['10.X.1.60'.replace('X', str(i))for i in range(
+            all_vars['start_team'], all_vars['total_teams'] + all_vars['start_team'])]
+        Windows_10 = ['10.X.1.70'.replace('X', str(i))for i in range(
+            all_vars['start_team'], all_vars['total_teams'] + all_vars['start_team'])]
+        Rouge_Windows = ['10.X.1.10'.replace('X', str(i))for i in range(
+            all_vars['start_team'], all_vars['total_teams'] + all_vars['start_team'])]
+        Ubuntu = ['10.X.1.40'.replace('X', str(i))for i in range(
+            all_vars['start_team'], all_vars['total_teams'] + all_vars['start_team'])]
+
+        # DMZ
+        WEB = ['10.X.2.2'.replace('X', str(i)) for i in range(
+            all_vars['start_team'], all_vars['total_teams'] + all_vars['start_team'])]
+        DB = ['10.X.2.3'.replace('X', str(i)) for i in range(
+            all_vars['start_team'], all_vars['total_teams'] + all_vars['start_team'])]
+        FTP = ['10.X.2.4'.replace('X', str(i)) for i in range(
+            all_vars['start_team'], all_vars['total_teams'] + all_vars['start_team'])]
+        IOT = ['10.X.2.10'.replace('X', str(i))for i in range(
+            all_vars['start_team'], all_vars['total_teams'] + all_vars['start_team'])]
+
+        # v10/MISC
+        #Windows_Core = ['10.X.1.50'.replace('X', str(i))for i in range(all_vars['start_team'], all_vars['total_teams']  + all_vars['start_team'])]
+        #Traveler = ["192.168.253.{}".format(str((i-1)*all_vars['IP_jump']+3)) for i in range(all_vars['start_team'], all_vars['total_teams']  + all_vars['start_team'])]
+        #PaloAlto = ['13.33.33.X'.replace('X', str(i)) for i in range(all_vars['start_team'], all_vars['total_teams']  + all_vars['start_team'])]
+        #CentOS = ['10.X.1.30'.replace('X', str(i))for i in range(all_vars['start_team'], all_vars['total_teams']  + all_vars['start_team'])]
+        #GitLab = ['10.X.2.5'.replace('X', str(i)) for i in range(all_vars['start_team'], all_vars['total_teams']  + all_vars['start_team'])]
+
+        cloud = WEB + DB + FTP + IOT
+
         for host_list in [
-                Active_Directory, Rouge_Windows, CentOS,
-                Ubuntu, Windows_10, Windows_Core,
-                WEB, DB, FTP, Gaming_Forum, GitLab, Traveler, PaloAlto
+                Active_Directory, Rouge_Windows, Ubuntu, Windows_10,
+                WEB, DB, FTP, IOT
         ]:
             for idx, host in enumerate(host_list):
                 team_number = idx + all_vars['start_team']
@@ -90,6 +105,7 @@ class Inventory(object):
                 hostvars[host]['timeout'] = 300
                 network = {}
 
+                #LAN
                 if host in Active_Directory:
                     hostvars[host]['domain_name'] = all_vars['domain']
                     hostvars[host]['netbios_name'] = all_vars['netbios']
@@ -100,51 +116,33 @@ class Inventory(object):
                 if host in Rouge_Windows:
                     hostvars[host]['template'] = 'Desktop-Ubuntu-Rouge-18.04-v8'
                     hostvars[host]['AD_Name'] = 'Rouge_Windows'
-
-                if host in CentOS:
-                    hostvars[host]['template'] = 'Desktop-Centos-07-v8'
-                    hostvars[host]['AD_Name'] = 'CentOS'
-
+                
                 if host in Ubuntu:
                     hostvars[host]['template'] = 'Desktop-Ubuntu-18.04-v8'
                     hostvars[host]['AD_Name'] = 'Ubuntu'
-
-                if host in Traveler:
-                    hostvars[host]['template'] = 'AWX-Desktop-LUbuntu-16.04'
-                    hostvars[host]['AD_Name'] = 'Traveler'
-
-                if host in PaloAlto:
-                    hostvars[host]['template'] = 'AWX-Palo-Alto'
-                    hostvars[host]['AD_Name'] = 'PaloAlto'
-                    hostvars[host]['skip_deployment_check'] = 'True'
 
                 if host in Windows_10:
                     hostvars[host]['template'] = 'Desktop-Windows-10-v8'
                     hostvars[host]['AD_Name'] = 'Windows10'
 
-                if host in Windows_Core:
-                    hostvars[host]['template'] = 'Server-Windows-Core-2019-v8'
-                    hostvars[host]['AD_Name'] = 'WindowsCore'
+
+                #DMZ
 
                 if host in FTP:
                     hostvars[host]['template'] = 'Windows-Server-FTP-v8'
                     hostvars[host]['AD_Name'] = 'FTP'
 
-                if host in Gaming_Forum:
+                if host in IOT:
                     hostvars[host]['template'] = 'Server-Ubuntu-18.04-v8'
-                    hostvars[host]['AD_Name'] = 'GamingForum'
-
-                if host in GitLab:
-                    hostvars[host]['template'] = 'Git-Server-Centos-7-v8'
-                    hostvars[host]['AD_Name'] = 'GitLab'
-                    hostvars[host][
-                        'gitlab_external_url'] = "http://gitlab.{}".format(all_vars['domain'])
-
+                    hostvars[host]['AD_Name'] = 'IOT'
+                
                 if host in WEB:
                     hostvars[host]['template'] = 'Server-Ubuntu-18.04-v8'
                     hostvars[host]['AD_Name'] = 'WEB'
-                    hostvars[host]['magento_host'] = "http://10.{}.2.2/".format(team_number)
-                    hostvars[host]['magento_db_host'] = "10.{}.2.3".format(team_number)
+                    hostvars[host]['magento_host'] = "http://10.{}.2.2/".format(
+                        team_number)
+                    hostvars[host]['magento_db_host'] = "10.{}.2.3".format(
+                        team_number)
                     hostvars[host]['apache_mods_enabled'] = ['rewrite.load']
 
                 if host in DB:
@@ -171,7 +169,34 @@ class Inventory(object):
                         'replicate': 0
                     })
 
-                if host in Active_Directory + FTP + Windows_Core:
+                #v10/MISC
+
+                # if host in CentOS:
+                #     hostvars[host]['template'] = 'Desktop-Centos-07-v8'
+                #     hostvars[host]['AD_Name'] = 'CentOS'
+                
+                # if host in Traveler:
+                #     hostvars[host]['template'] = 'AWX-Desktop-LUbuntu-16.04'
+                #     hostvars[host]['AD_Name'] = 'Traveler'
+
+                # if host in PaloAlto:
+                #     hostvars[host]['template'] = 'AWX-Palo-Alto'
+                #     hostvars[host]['AD_Name'] = 'PaloAlto'
+                #     hostvars[host]['skip_deployment_check'] = 'True'
+
+                # if host in Windows_Core:
+                #     hostvars[host]['template'] = 'Server-Windows-Core-2019-v8'
+                #     hostvars[host]['AD_Name'] = 'WindowsCore'
+
+                # if host in GitLab:
+                #     hostvars[host]['template'] = 'Git-Server-Centos-7-v8'
+                #     hostvars[host]['AD_Name'] = 'GitLab'
+                #     hostvars[host][
+                #         'gitlab_external_url'] = "http://gitlab.{}".format(all_vars['domain'])
+
+
+                #ACCOUNTS
+                if host in Active_Directory + FTP:
                     hostvars[host]['ansible_user'] = 'Administrator'
                     hostvars[host]['ansible_password'] = 'Change.me!'
                     hostvars[host]['customization']['password'] = hostvars[host]['ansible_password']
@@ -182,13 +207,14 @@ class Inventory(object):
                     hostvars[host]['ansible_password'] = 'Change.me!'
                     hostvars[host]['timeout'] = 600
 
-                if host in Rouge_Windows + CentOS + Ubuntu + WEB + DB + Gaming_Forum + GitLab + Traveler:
+                if host in Rouge_Windows + Ubuntu + WEB + DB + IOT:
                     hostvars[host]['ansible_user'] = 'sysadmin'
                     hostvars[host]['ansible_password'] = 'changeme'
                     hostvars[host]['ansible_become_pass'] = hostvars[host]['ansible_password']
                     hostvars[host]['OS'] = 'Linux'
 
-                if host in FTP + Windows_10 + Windows_Core:
+                #Networking
+                if host in FTP + Windows_10:
                     hostvars[host]['dns_domain_name'] = hostvars[
                         Active_Directory[idx]]['domain_name']
                     hostvars[host]['domain_admin_password'] = hostvars[
@@ -196,16 +222,19 @@ class Inventory(object):
                     hostvars[host]['domain_admin_user'] = hostvars[
                         Active_Directory[idx]]['ansible_user']
 
-                if host in Active_Directory + FTP + Windows_10 + Windows_Core:
+                if host in Active_Directory + FTP + Windows_10:
                     hostvars[host]['ansible_connection'] = 'winrm'
                     hostvars[host]['ansible_winrm_server_cert_validation'] = 'ignore'
                     hostvars[host]['OS'] = 'Windows'
 
                 if host not in Active_Directory:
-                    hostvars[host]['customization']['dns_servers'] = [Active_Directory[idx], all_vars['prefered_DNS']]
-                    network['dns_servers'] = [Active_Directory[idx], all_vars['prefered_DNS']]
+                    hostvars[host]['customization']['dns_servers'] = [
+                        Active_Directory[idx], all_vars['prefered_DNS']]
+                    network['dns_servers'] = [
+                        Active_Directory[idx], all_vars['prefered_DNS']]
                 else:
-                    hostvars[host]['customization']['dns_servers'] = [all_vars['prefered_DNS']]
+                    hostvars[host]['customization']['dns_servers'] = [
+                        all_vars['prefered_DNS']]
                     network['dns_servers'] = [all_vars['prefered_DNS']]
 
                 if host in cloud:
@@ -215,71 +244,78 @@ class Inventory(object):
                     hostvars[host]['folder'] = 'Lockdown/{}/Team{:02d}'.format(
                         all_vars['parent_folder'], team_number)
 
-
-                def networking (ip):
+                def networking(ip):
                     network['name'] = "team{}-net".format(team_number)
                     network['ip'] = ip
                     network['netmask'] = '255.255.255.0'
-                    network['gateway'] = "10.{}.{}.1".format(team_number, host.split('.')[2])
+                    network['gateway'] = "10.{}.{}.1".format(
+                        team_number, host.split('.')[2])
                     network['start_connected'] = True
                     return network
                 hostvars[host]['networks'] = [networking(host)]
                 hostvars[host]['team_number'] = team_number
                 hostvars[host]['customization']['hostname'] = hostvars[host]['AD_Name']
 
-                if host in Traveler:
-                    hostvars[host]['networks'][0]['netmask'] = '255.255.255.248'
-                    hostvars[host]['networks'][0]['gateway'] = "192.168.253.{}".format(str((team_number-1)*all_vars['IP_jump']+1))
+                # if host in Traveler:
+                #     hostvars[host]['networks'][0]['netmask'] = '255.255.255.248'
+                #     hostvars[host]['networks'][0]['gateway'] = "192.168.253.{}".format(
+                #         str((team_number-1)*all_vars['IP_jump']+1))
 
-                if host in PaloAlto:
-                    hostvars[host]['networks'] = []
-                    for net_instance in ['13.33.33.37', '13.33.33.37', '13.33.33.37', '13.33.33.37']:
-                        hostvars[host]['networks'].append(networking(net_instance))
-
+                # if host in PaloAlto:
+                #     hostvars[host]['networks'] = []
+                #     for net_instance in ['13.33.33.37', '13.33.33.37', '13.33.33.37', '13.33.33.37']:
+                #         hostvars[host]['networks'].append(
+                #             networking(net_instance))
 
         AD = {}
         AD['hosts'] = Active_Directory
         Linux_A = {}
         Linux_A['hosts'] = Rouge_Windows
-        Linux_B = {}
-        Linux_B['hosts'] = CentOS
+        # Linux_B = {}
+        # Linux_B['hosts'] = CentOS
         Linux_C = {}
         Linux_C['hosts'] = Ubuntu
         Windows_A = {}
         Windows_A['hosts'] = Windows_10
-        Windows_B = {}
-        Windows_B['hosts'] = Windows_Core
+        # Windows_B = {}
+        # Windows_B['hosts'] = Windows_Core
         WEB_Servers = {}
         WEB_Servers['hosts'] = WEB
         DB_Servers = {}
         DB_Servers['hosts'] = DB
         FTP_Servers = {}
         FTP_Servers['hosts'] = FTP
-        GamingForum = {}
-        GamingForum['hosts'] = Gaming_Forum
+        IOT = {}
+        IOT['hosts'] = IOT
         GIT_Servers = {}
-        GIT_Servers['hosts'] = GitLab
-        Traveler_box = {}
-        Traveler_box['hosts'] = Traveler
-        PaloAlto_box = {}
-        PaloAlto_box['hosts'] = PaloAlto
+        # GIT_Servers['hosts'] = GitLab
+        # Traveler_box = {}
+        # Traveler_box['hosts'] = Traveler
+        # PaloAlto_box = {}
+        # PaloAlto_box['hosts'] = PaloAlto
 
-        #TODO: Potentially include palo Alto
+        # TODO: Potentially include palo Alto
         ################################################################################################
         inventory['all'] = all
+
+        #LAN
         inventory['AD'] = AD
         inventory['Rouge_Windows'] = Linux_A
-        inventory['CentOS'] = Linux_B
         inventory['Ubuntu'] = Linux_C
         inventory['Windows_10'] = Windows_A
-        inventory['Windows_Core'] = Windows_B
+        
+        #DMZ
         inventory['WEB'] = WEB_Servers
         inventory['DB'] = DB_Servers
         inventory['GIT'] = GIT_Servers
         inventory['FTP'] = FTP_Servers
-        inventory['Gaming_Forum'] = GamingForum
-        inventory['Traveler'] = Traveler_box
-        inventory['PaloAlto'] = PaloAlto_box
+        inventory['IOT'] = IOT
+
+        #v10/MISC
+        #inventory['CentOS'] = Linux_B
+        #inventory['Windows_Core'] = Windows_B
+        #inventory['Traveler'] = Traveler_box
+        #inventory['PaloAlto'] = PaloAlto_box
 
         #################################################################################################
 
@@ -292,10 +328,12 @@ class Inventory(object):
     def empty_inventory(self):
         return {'_meta': {'hostvars': {}}}
     # Read the command line args passed to the script.
+
     def read_cli_args(self):
         parser = argparse.ArgumentParser()
         parser.add_argument('--list', action='store_true')
         parser.add_argument('--host', action='store')
         self.args = parser.parse_args()
+
 
 Inventory()
